@@ -1,8 +1,7 @@
 'use strict';
 
-const memoryStorage = require('./memory');
-const fileStorage = require('./filesystem');
-
+import memoryStorage from './memory.js'
+import fileStorage from './filesystem.js';
 let dataStorageModule = {};
 
 switch (process.env.STORAGE) {
@@ -13,4 +12,4 @@ default:
   dataStorageModule = memoryStorage;
 }
 
-module.exports = dataStorageModule;
+export default dataStorageModule;

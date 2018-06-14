@@ -1,11 +1,10 @@
 
-[![Build Status](https://travis-ci.com/khuynh92/09-rest-persistence.svg?branch=master)](https://travis-ci.com/khuynh92/09-rest-persistence)
+[![Build Status](https://travis-ci.com/khuynh92/11-express.svg?branch=master)](https://travis-ci.com/khuynh92/11-express)
 ## 09-persistence
 
-  Travis: https://travis-ci.com/khuynh92/08-rest  
-  Heroku: https://khoa-09-persistence.herokuapp.com  
-  PR: https://github.com/khuynh92/09-rest-persistence/pull/2  
-
+  Travis: https://travis-ci.com/khuynh92/11-express
+  Heroku: https://khoa-11-express.herokuapp.com  
+  PR: 
 in order to run this app:
 
  1. clone this repository

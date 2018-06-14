@@ -1,18 +1,19 @@
 'use strict';
 
-const router = require('../lib/router');
-const fs = require('fs');
-const Note = require('../models/notes');
+import express from 'express';
+const router = express.Router();
 
+import fs from 'fs';
+import Note from '../models/notes.js';
 
-let sendJSON = (res,data) => {
+let sendJSON = (res, data) => {
 
   res.statusCode = 200;
   res.statusMessage = 'OK';
   res.setHeader('Content-Type', 'application/json');
   res.write(JSON.stringify(data));
   res.end();
-  
+
 };
 
 let serverErr = (res, err) => {
@@ -20,12 +21,12 @@ let serverErr = (res, err) => {
   res.statusCode = 404;
   res.statusMessage = 'Not Found';
   res.setHeader('Content-Type', 'application/json');
-  res.write( JSON.stringify(error) );
+  res.write(JSON.stringify(error));
   res.end();
 
 };
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
   res.statusCode = 200;
   res.statusMessage = 'OK';
 
@@ -38,36 +39,37 @@ router.get('/', (req,res) => {
 });
 
 router.get('/api/v1/pizza', (req, res) => {
-  if(req.url.query.id === '') {
-    res.statusCode = 404;
-    res.statusMessage = 'bad request';
-    res.write(`{ERROR: 'Bad Request'}`);
-    res.end();
-  } else if(req.url.query.id) {
-    Note.findOne(req.url.query.id)
-      .then(data => sendJSON(res, data))
-      .catch(err => serverErr(res,err));
+  Note.findAll()
+    .then(data => sendJSON(res, data))
+    .catch(err => serverErr(res, err));
+});
 
-  }else {
-    Note.findAll()
+router.get('/api/v1/pizza/:id', (req, res) => {
+
+  Note.findOne(req.params.id)
+    .then(data => sendJSON(res, data))
+    .catch(err => serverErr(res, err));
+
+});
+
+router.post('/api/v1/pizza', (req, res) => {
+  if (Object.keys(req.body).length === 0) {
+    res.statusCode = 400;
+    res.statusMessage = 'Bad Request';
+    res.write('Bad Request');
+    res.end();
+  } else {
+    let newNote = new Note(req.body);
+
+    newNote.save()
       .then(data => sendJSON(res, data))
       .catch(err => serverErr(res, err));
   }
 });
 
-router.post('/api/v1/pizza', (req,res) => {
-
-  let newNote = new Note(req.body);
-
-  newNote.save()
-    .then(data => sendJSON(res,data))
-    .catch(err => serverErr(res, err));
-
-});
-
-router.delete('/api/v1/pizza', (req, res) => {
-  if(req.url.query.id) {
-    Note.deleteOne(req.url.query.id)
+router.delete('/api/v1/pizza/:id', (req, res) => {
+  if (req.params.id) {
+    Note.deleteOne(req.params.id)
       .then(() => {
         res.statusCode = 204;
         res.statusMessage = 'OK';
@@ -82,3 +84,4 @@ router.delete('/api/v1/pizza', (req, res) => {
   }
 });
 
+export default router;

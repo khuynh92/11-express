@@ -1,20 +1,23 @@
 'use strict';
 
-let http = require('http');
+import express from 'express';
+import router from './api/api.js';
 
-const router = require('./lib/router.js');
-require('./api/api.js');
+let app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+app.use(router);
 
 let isRunning = false;
 
-const app = http.createServer(router.route);
-
-
+let server;
 
 module.exports = {  
   start: (port) => {
     if(! isRunning) {
-      app.listen(port, (err) => {
+      server =  app.listen(port, (err) => {
         if(err) { throw err; }
         isRunning = true;
         console.log('Server running on', port);
@@ -26,7 +29,7 @@ module.exports = {
   },
 
   stop: () => {
-    app.close( () => {
+    server.close( () => {
       isRunning = false;
       console.log('Server has been stopped');
     });
