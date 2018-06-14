@@ -1,9 +1,8 @@
 
 'use strict';
 
-const fs = require('fs');
-
-const storage = module.exports = {};
+import fs from 'fs';
+const storage = {};
 
 const root = `${__dirname}/../../../data`;
 
@@ -77,3 +76,5 @@ storage.deleteOne = id => {
     });
   });
 };
+
+export default storage;
