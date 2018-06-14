@@ -2,9 +2,9 @@
 [![Build Status](https://travis-ci.com/khuynh92/11-express.svg?branch=master)](https://travis-ci.com/khuynh92/11-express)
 ## 11-express
 
-  Travis: https://travis-ci.com/khuynh92/11-express
+  Travis: https://travis-ci.com/khuynh92/11-express  
   Heroku: https://khoa-11-express.herokuapp.com  
-  PR: https://github.com/khuynh92/11-express/pull/1
+  PR: https://github.com/khuynh92/11-express/pull/1  
 in order to run this app:
 
  1. clone this repository
