@@ -77,4 +77,40 @@ storage.deleteOne = id => {
   });
 };
 
+storage.updateOne = (id, body) => {
+  return new Promise((resolve, reject) => {
+    if ( ! body.id ) { reject('No Record ID Specified'); }
+
+    let file = `${root}/${id}.json`;
+    let text = JSON.stringify(body);
+
+    fs.writeFile(file, text, (err) => {
+      if(err) { reject(err); }
+      resolve(body);
+    });
+
+  });
+};
+
+storage.patchOne = (id, body) => {
+  return new Promise((resolve, reject) => {
+
+    storage.get(id)
+      .then(data => {
+        Object.entries(body).forEach(prop => {
+          data[prop[0]] = prop[1];
+        });
+
+        let file = `${root}/${id}.json`;
+        let text = JSON.stringify(data);
+
+        fs.writeFile(file, text, (err) => {
+          if(err) { reject(err); }
+          resolve(data);
+        });
+      });
+    
+  });
+};
+
 export default storage;

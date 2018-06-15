@@ -84,4 +84,32 @@ router.delete('/api/v1/pizza/:id', (req, res) => {
   }
 });
 
+router.put('/api/v1/pizza/:id', (req, res) => {
+  if (Object.keys(req.body).length === 0) {
+    res.statusCode = 400;
+    res.statusMessage = 'Bad Request';
+    res.write('Bad Request');
+    res.end();
+  } 
+  else {
+    Note.updateOne(req.params.id, req.body)
+      .then(data => sendJSON(res, data))
+      .catch(err => serverErr(res, err));
+  }
+});
+
+router.patch('/api/v1/pizza/:id', (req, res) => {
+  if (Object.keys(req.body).length === 0) {
+    res.statusCode = 400;
+    res.statusMessage = 'Bad Request';
+    res.write('Bad Request');
+    res.end();
+  } 
+  else {
+    Note.patchOne(req.params.id, req.body)
+      .then(data => sendJSON(res, data))
+      .catch(err => serverErr(res, err));
+  }
+});
+
 export default router;

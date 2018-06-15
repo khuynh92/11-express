@@ -36,4 +36,33 @@ storage.deleteOne = id => {
   });
 };
 
+//storage takes in a body, looks for it instorage where body.id matches, updates all information, removing existing data.
+storage.updateOne = (id, body) => {
+  return new Promise((resolve, reject) => {
+    if (database[id]) {
+      database[id] = body;
+      database[id].id = id;
+      resolve(database[id]);
+    } else { reject(`${id} not found`); }
+  }); 
+  
+};
+
+storage.patchOne = (id, body) => {
+  return new Promise((resolve, reject) => {
+    if (database[id]) {
+
+      let dataArray = Object.keys(database[id]);
+
+      console.log('the dataArray,', dataArray);
+
+      Object.entries(body).forEach(prop => {
+
+        database[id][prop[0]] = prop[1];
+
+      });
+      resolve (database[id]);
+    } else { reject(`${id} not found`); }
+  });
+};
 export default storage;
