@@ -45,5 +45,24 @@ storage.updateOne = (id, body) => {
       resolve(database[id]);
     } else { reject(`${id} not found`); }
   }); 
+  
+};
+
+storage.patchOne = (id, body) => {
+  return new Promise((resolve, reject) => {
+    if (database[id]) {
+
+      let dataArray = Object.keys(database[id]);
+
+      console.log('the dataArray,', dataArray);
+
+      Object.entries(body).forEach(prop => {
+
+        database[id][prop[0]] = prop[1];
+
+      });
+      resolve (database[id]);
+    } else { reject(`${id} not found`); }
+  });
 };
 export default storage;

@@ -39,6 +39,10 @@ class Note {
   static updateOne(id, body) {
     return storage.updateOne(id, body);
   }
+
+  static patchOne(id, body) {
+    return storage.patchOne(id, body);
+  }
 }
 
 export default Note;
